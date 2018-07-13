@@ -6,7 +6,7 @@ handleSearchInput = () => {
     });
     textlist = textlist.filter(text => text !== "");
     console.log(textlist);
-    return textlist.join(',');
+    return textlist.join(' ');
 
 };
 
