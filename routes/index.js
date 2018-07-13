@@ -13,10 +13,16 @@ router.get('/', (req, res, next) => {
 
 
 router.post("/api/search", (req, res, next) => {
+
+
     console.log(req.body.queries);
+    const query = req.body.queries;
+    const words = req.body.queries.split(",");
+
+
     let result = [];
     request({
-        url: 'http://localhost:8983/solr/PSearch/select?q=UCInetID:' + req.body.queries + '~0.3&wt=json',
+        url: `http://localhost:8983/solr/PSearch/select?fl=UCInetID,%20Name,%20Major,%20Email_Address,%20Department_str&q=UCInetID:${query}~3%20OR%20Name:${query}~3%20OR%20Email_Address:${query}~3%20OR%20Department_str:${query}~3%20OR%20Title:${query}~3&wt=json`,
         json: true
     })
         .then((resp) => {
@@ -25,17 +31,8 @@ router.post("/api/search", (req, res, next) => {
             });
         }).then(
         () => {
-            request({
-                url: 'http://localhost:8983/solr/PSearch/select?q=Name:' + req.body.queries + '~0.3&wt=json',
-                json: true
-            })
-                .then((resp) => {
-                    resp.response.docs.forEach((x) => {
-                        result.push(x);
-                    });
-                }).then(() => {
-                res.send(result);
-            });
+
+            res.send(result);
 
 
         });

@@ -12,12 +12,14 @@ html
         meta(content='text/html; charset=utf-8', http-equiv='Content-Type')
         script(type='text/javascript').
             $(document).ready(function () {
-                table = $('#table_id').DataTable({
+                table = $('#result').DataTable({
 
 
                         columns: [
                             {data: 'UCInetID'},
-                            {data: 'Name'}
+                            {data: 'Name'},
+                            {data: 'Major'},
+                            {data: 'Email_Address'}
                         ],
                         searching: false,
                         paging: false,
@@ -38,9 +40,11 @@ html
                                 span.glyphicon.glyphicon-search
         #show_result
 
-        table#table_id.table.table-striped.table-bordered(style='margin: auto;width: 50%;border: 3px solid green;padding: 10px;')
+        table#result.table.table-striped.table-bordered(style='margin: auto;width: 50%;border: 3px solid green;padding: 10px;')
             thead
                 tr
                     th UCInetID
                     th Name
+                    th Major
+                    th Email
 

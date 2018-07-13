@@ -1,9 +1,6 @@
-const tableify = require('html-tableify');
-
-
-function handleSearchInput() {
+handleSearchInput = () => {
     console.log("in search");
-    let textlist = $('#search-query').val().trim().split(" ");
+    let textlist = $('#search-query').val().trim().split();
     textlist = textlist.map(text => {
         return text.replace(/[.,\/#!$%^&*;:{}=\-_`~()]/g, "")
     });
@@ -11,31 +8,43 @@ function handleSearchInput() {
     console.log(textlist);
     return textlist.join(',');
 
-}
+};
 
-function handleSearch() {
-    jQuery.ajax({
-        dataType: "json",
-        data: {'queries': handleSearchInput()},
-        url: "api/search",
-        method: "POST",
-        success: (resultData) => handleSearchResult(resultData)
-    });
-}
+handleSearch = () => {
 
-function handleSearchResult(resultData) {
+    let query = handleSearchInput();
+
+
+    if (query.length > 2) {
+        jQuery.ajax({
+            dataType: "json",
+            data: {'queries': query},
+            url: "api/search",
+            method: "POST",
+            success: (resultData) => handleSearchResult(resultData)
+        });
+    }
+    else {
+        $('#result').dataTable().api().clear().draw();
+
+    }
+
+};
+handleSearchResult = (resultData) => {
+
     //show the search result
     console.log(resultData);
 
-    $('#table_id').dataTable().api().clear().rows.add(resultData).draw();
+    $('#result').dataTable().api().clear().rows.add(resultData).draw();
 
 
-}
+};
 
-function handleEnter(event) {
-    if (event.keyCode === 13) {
-        handleSearch();
-    }
-}
+handleEnter = (event) => {
+
+    handleSearch();
+
+};
+
 
 
