@@ -1,0 +1,46 @@
+doctype html
+html
+    head
+        script(src='//code.jquery.com/jquery-3.3.1.js')
+        script(src='js/show-result.js')
+        script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+        link#bootstrap-css(href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css', rel='stylesheet')
+        script(src='//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js')
+        link(href='//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css', type='text/css')
+        link(href='css/search.css', rel='stylesheet', type='text/css', media='screen')
+        meta(content='en-us', http-equiv='Content-Language')
+        meta(content='text/html; charset=utf-8', http-equiv='Content-Type')
+        script(type='text/javascript').
+            $(document).ready(function () {
+                table = $('#table_id').DataTable({
+
+
+                        columns: [
+                            {data: 'UCInetID'},
+                            {data: 'Name'}
+                        ],
+                        searching: false,
+                        paging: false,
+                        order: false
+                    }
+                );
+            });
+        title Search Engine
+    body
+        img(src='image/logo.png', style='width: 30%;height:15%;margin-left: 35%;')
+        .container
+            .row
+                #custom-search-input
+                    .input-group.col-md-12
+                        input#search-query.search-query.form-control(type='text', placeholder='Search', onkeyup='handleEnter(event)')
+                        span.input-group-btn
+                            button.btn.btn-danger(type='button', onclick='handleSearch();')
+                                span.glyphicon.glyphicon-search
+        #show_result
+
+        table#table_id.table.table-striped.table-bordered(style='margin: auto;width: 50%;border: 3px solid green;padding: 10px;')
+            thead
+                tr
+                    th UCInetID
+                    th Name
+
